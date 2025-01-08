@@ -1,0 +1,131 @@
+<!-- Copyright (c) ghgltggamer 2024
+     A Homepage Written in HTML , CSS and JS for Everyone To Use!
+     No Telemetry Or Privacy Voilation, Just Host Localy and Boom
+     Written By Ghgltggamer
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's Browse The Web!</title>
+    <style>
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 80vh;
+            font-family: Arial;
+            background-color: whitesmoke;
+        }
+        *{
+            font-weight: 10;
+        }
+        .card{
+            background-color: rgba(255, 255, 255, .4);
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, .1);
+            padding: 40px;
+            border-radius: 20px;
+            color: rgb(47, 47, 47);
+            backdrop-filter: blur(10px);
+        }
+
+        ::selection{
+            background-color: rgba(189, 189, 189, 0.073);
+            color: black;
+        }
+        input{
+            padding: 10px;
+            border: 2px solid rgba(0, 0, 0, 0.102);
+            transition: .5s;
+            border-radius: 10px;
+            outline: none;
+            background-color: rgba(255, 255, 255, .4);
+        }
+        button{
+            background-color: rgba(255, 255, 255, .4);
+            border: 0px;
+            border-radius: 10px;
+            outline: none;
+            height: 40px;
+            width: 100px;
+            transition: .3s;
+            backdrop-filter: blur(10px);
+
+        }
+        button:hover{
+            background-color: rgba(0,0,0,.05);
+        }
+        button:active{
+            background-color: rgba(0,0,0,.1);
+        }
+    </style>
+</head>
+<body style="background-image: url('https://kartimages.github.io/products/img/img_0138.jpeg');">
+    <button id="edit-signal" style="position: absolute;right: 10px;top: 10px;">
+        Edit
+    </button>
+    <button id="edit-save-signal" style="position: absolute;left: 10px;top: 10px;">
+        Save
+    </button>
+    <div id="content" contenteditable="false">
+        <div class="card">
+            <h1>
+                Let's Browse The Web
+            </h1>
+            <br>
+            <input type="text" name="text" placeholder="Browse The Web"> <button contenteditable="false" id="search-signal"> Go </button>
+        </div>
+    </div>
+</body>
+<script>
+    // Editor manager
+    class Editor{
+        is_Editing = false;
+        start(){
+            if (!self.is_Editing){
+                const editables = [document.getElementById('content'), document.getElementById('search-signal')];
+                for (let i = 0;i < editables.length;i++){
+                    editables[i].contentEditable = true;
+                }
+            }
+            self.is_Editing = true;
+        }
+        stop(){
+            if (self.is_Editing){
+                const editables = [document.getElementById('content'), document.getElementById('search-signal')];
+                for (let i = 0;i < editables.length;i++){
+                    editables[i].contentEditable = false;
+                }
+            }
+            localStorage.setItem('content', document.getElementById('content').innerHTML);
+            self.is_Editing = false;
+        }
+    };
+</script>
+
+<script>
+    // Signal manager
+    const edit_signal = document.getElementById('edit-signal');
+    const save_signal = document.getElementById('edit-save-signal');
+    const search_signal = document.getElementById('search-signal');
+
+    // Configs
+    const editor = new Editor;
+
+    // Signal callback manager
+    edit_signal.addEventListener('click', ()=>{
+        editor.start();       
+    })
+
+    save_signal.addEventListener('click', ()=>{
+        editor.stop();
+    })
+</script>
+<script>
+    // Display Manager
+    if (localStorage.getItem('content') !== null){
+        document.getElementById('content').innerHTML = localStorage.getItem('content');
+    }
+</script>
+</html>
